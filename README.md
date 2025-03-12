@@ -1,6 +1,8 @@
 # Self-RAG URL Question Answering
 
 <br>
+Use the script.py file to run the entire code, or use the url_question_answering_test.ipynb notebook to play around with the code.
+<br>
 
 ### <b> Setup </b>
 
