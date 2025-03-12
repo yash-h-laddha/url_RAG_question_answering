@@ -6,7 +6,7 @@
 
 (1) Use the following line to install the required packages:
 
-```
+```bash
 %pip install -U langchain-nomic langchain_community tiktoken langchainhub chromadb langchain langgraph nomic[local]
 ```
 
@@ -28,7 +28,7 @@ Further documentation available [here](https://docs.nomic.ai/reference/getting-s
 `ollama pull mistral`
 
 (4) The following piece of code is included in the script and can be changed to change your model:
-```
+```python
 # Ollama model name
 local_llm = "mistral"
 ```
@@ -39,7 +39,7 @@ local_llm = "mistral"
 
 ### Create Index using URLs
 
-```
+```python
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.vectorstores import Chroma
@@ -71,14 +71,14 @@ retriever = vectorstore.as_retriever()
 ```
 
 ### Define your Question
-```
+```python
 ### Define Question
 
 question = "mermaid.lnk to make png"
 ```
 
 ### Define the various LLM roles
-``` 
+```python 
 ### Retrieval Grader
 
 from langchain.prompts import PromptTemplate
@@ -107,7 +107,7 @@ print(retrieval_grader.invoke({"question": question, "document": doc_txt}))
 ```
 Embedding texts: 100%|██████████| 1/1 [00:00<00:00,  8.85inputs/s]
 {'score': 'yes'}
-```
+```python
 ### Generate
 
 from langchain import hub
@@ -148,7 +148,8 @@ Some common choices of ANN algorithms for fast MIPS include:
 - Annoy (Approximate Nearest Neighbors Oh Yeah)
 - Faiss (Facebook AI Similarity Search)
 - NMSLib (Natural Language Toolkit - Nearest Neighbor Search Library
-```
+
+```python
 ### Hallucination Grader
 
 # LLM
@@ -171,7 +172,8 @@ hallucination_grader = prompt | llm | JsonOutputParser()
 hallucination_grader.invoke({"documents": docs, "generation": generation})
 ```
 {'score': 'yes'}
-```
+
+```python
 ### Answer Grader
 
 # LLM
@@ -194,7 +196,8 @@ answer_grader = prompt | llm | JsonOutputParser()
 answer_grader.invoke({"question": question, "generation": generation})
 ```
 {'score': 'yes'}
-```
+
+```python
 ### Question Re-writer
 
 # LLM
@@ -217,7 +220,7 @@ question_rewriter.invoke({"question": question})
 
 Define the various nodes and the flow of the graph.
 
-```
+```python
 from typing import List
 
 from typing_extensions import TypedDict
@@ -237,7 +240,7 @@ class GraphState(TypedDict):
     generation: str
     documents: List[str]
 ```
-```
+```python
 ### Nodes
 
 
@@ -399,7 +402,7 @@ def grade_generation_v_documents_and_question(state):
 
 Basically builds out what we've defined earlier.
 
-```
+```python
 from langgraph.graph import END, StateGraph, START
 
 workflow = StateGraph(GraphState)
@@ -437,7 +440,7 @@ app = workflow.compile()
 ```
 
 ### Visualize the Graph
-```
+```python
 from IPython.display import Image, display
 from langchain_core.runnables.graph import MermaidDrawMethod
 
@@ -452,7 +455,7 @@ display(
 
 ### Run 
 
-```
+```python
 from pprint import pprint
 
 # Run
